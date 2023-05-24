@@ -28,8 +28,8 @@ int pte_set_fpn(uint32_t *pte, int fpn)
 }
 
 int main(){
-  printf("%d\n", PAGING_PAGE_ALIGNSZ(200))
-  printf("%d\n", PAGING_PAGE_ALIGNSZ(300))
+  printf("%d\n", PAGING_PAGE_ALIGNSZ(200));
+  printf("%d\n", PAGING_PAGE_ALIGNSZ(300));
 // uint32_t *pgd;
 // pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
 //   for(int pgit = 0; pgit < 10; pgit++)
