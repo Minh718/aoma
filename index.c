@@ -90,7 +90,7 @@ int main(){
     pte_set_swap(pte0, 0, 2);
     // pte_set_fpn(pte1, 1);
     // pte_set_fpn(pte2, 2);
-    uint32_t e0 = pgd[0];
+    uint32_t e0 = pgd[1];
     // uint32_t e1 = pgd[1];
     // uint32_t e2 = pgd[2];
     if(!PAGING_PAGE_PRESENT(e0)) printf("KKKKKK");
