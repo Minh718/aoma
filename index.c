@@ -64,11 +64,11 @@
 
 int pte_set_swap(uint32_t *pte, int swptyp, int swpoff)
 {
-  SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
-  SETBIT(*pte, PAGING_PTE_SWAPPED_MASK);
+  // SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
+  // SETBIT(*pte, PAGING_PTE_SWAPPED_MASK);
 
-  SETVAL(*pte, swptyp, PAGING_PTE_SWPTYP_MASK, PAGING_PTE_SWPTYP_LOBIT);
-  SETVAL(*pte, swpoff, PAGING_PTE_SWPOFF_MASK, PAGING_PTE_SWPOFF_LOBIT);
+  // SETVAL(*pte, swptyp, PAGING_PTE_SWPTYP_MASK, PAGING_PTE_SWPTYP_LOBIT);
+  // SETVAL(*pte, swpoff, PAGING_PTE_SWPOFF_MASK, PAGING_PTE_SWPOFF_LOBIT);
 
   return 0;
 }
@@ -90,7 +90,7 @@ int main(){
     pte_set_swap(pte0, 0, 2);
     // pte_set_fpn(pte1, 1);
     // pte_set_fpn(pte2, 2);
-    uint32_t e0 = pgd[1];
+    uint32_t e0 = pgd[0];
     // uint32_t e1 = pgd[1];
     // uint32_t e2 = pgd[2];
     if(!PAGING_PAGE_PRESENT(e0)) printf("KKKKKK");
