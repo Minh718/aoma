@@ -35,6 +35,8 @@
 #define GENMASK(h, l) \
 	(((~0U) << (l)) & (~0U >> (BITS_PER_LONG  - (h) - 1)))
 #define PAGING_PTE_FPN_MASK    GENMASK(PAGING_PTE_FPN_HIBIT,PAGING_PTE_FPN_LOBIT)
+#define PAGING_PTE_PRESENT_MASK BIT(31) 
+#define PAGING_PAGE_PRESENT(pte) (pte&PAGING_PTE_PRESENT_MASK)
 int pte_set_fpn(uint32_t *pte, int fpn)
 {
   SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
@@ -46,15 +48,17 @@ int pte_set_fpn(uint32_t *pte, int fpn)
 }
 
 int main(){
-  printf("%d\n", PAGING_PGN(200));
-  printf("%d\n", PAGING_PGN(300));
-  printf("%d\n", PAGING_OFFST(200));
-  printf("%d\n", PAGING_OFFST(300));
-// uint32_t *pgd;
-// pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
+uint32_t *pgd;
+pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
+     uint32_t *pte = &pgd[0];
+      pte_set_fpn(pte, 0);
+    uint32_t pte1 = mm->pgd[1];
+  printf("%d\n", PAGING_PAGE_PRESENT(pte1));
+  // printf("%d\n", PAGING_PAGE_PRESENT(0));
+  // printf("%d\n", PAGING_PAGE_PRESENT(1));
+  // printf("%d\n", PAGING_PAGE_PRESENT(55));
 //   for(int pgit = 0; pgit < 10; pgit++)
 //   {
-//      uint32_t *pte = &pgd[pgit];
 //      printf("%08ld: %08x\n", pgit * sizeof(uint32_t), pgd[pgit]);
 //      pte_set_fpn(pte, pgit);
 //      printf("%08ld: %08x\n", pgit * sizeof(uint32_t), pgd[pgit]);
