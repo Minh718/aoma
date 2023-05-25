@@ -28,6 +28,8 @@
 #define GETVAL(v,mask,offst) ((v&mask)>>offst)
 #define PAGING_PGN(x)  GETVAL(x,PAGING_PGN_MASK,PAGING_ADDR_PGN_LOBIT)
 
+
+// Change BY STUDENT
 #define PAGING_MEMRAMSZ BIT(10) /* 1MB */
 #define PAGING_ADDR_FPN_LOBIT 0
 #define PAGING_ADDR_FPN_HIBIT (NBITS(PAGING_PAGESZ) - 1)
@@ -51,6 +53,25 @@
 #define PAGING_SWP_LOBIT NBITS(PAGING_PAGESZ)
 #define PAGING_SWP_MASK  GENMASK(PAGING_SWP_HIBIT,PAGING_SWP_LOBIT)
 #define PAGING_SWP(pte) ((pte&PAGING_SWP_MASK) >> PAGING_SWPFPN_OFFSET)
+
+#define PAGING_PTE_SWPTYP_HIBIT 4
+#define PAGING_PTE_SWPTYP_MASK GENMASK(PAGING_PTE_SWPTYP_HIBIT,PAGING_PTE_SWPTYP_LOBIT)
+#define PAGING_PTE_SWPTYP_LOBIT 0
+#define PAGING_PTE_SWPOFF_MASK GENMASK(PAGING_PTE_SWPOFF_HIBIT,PAGING_PTE_SWPOFF_LOBIT)
+#define PAGING_PTE_SWPOFF_LOBIT 5
+#define PAGING_PTE_SWPOFF_HIBIT 25
+
+
+int pte_set_swap(uint32_t *pte, int swptyp, int swpoff)
+{
+  SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
+  SETBIT(*pte, PAGING_PTE_SWAPPED_MASK);
+
+  SETVAL(*pte, swptyp, PAGING_PTE_SWPTYP_MASK, PAGING_PTE_SWPTYP_LOBIT);
+  SETVAL(*pte, swpoff, PAGING_PTE_SWPOFF_MASK, PAGING_PTE_SWPOFF_LOBIT);
+
+  return 0;
+}
 int pte_set_fpn(uint32_t *pte, int fpn)
 {
   SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
@@ -66,13 +87,13 @@ int main(){
     uint32_t *pte0 = &pgd[0];
     uint32_t *pte1 = &pgd[1];
     uint32_t *pte2 = &pgd[2];
-    pte_set_fpn(pte0, 0);
+    pte_set_swap(pte0, 0, 0);
     pte_set_fpn(pte1, 1);
     pte_set_fpn(pte2, 2);
     uint32_t e0 = pgd[0];
     uint32_t e1 = pgd[1];
     uint32_t e2 = pgd[2];
-    printf("%d\n", PAGING_FPN(e1));
+    printf("%d\n", PAGING_PAGE_PRESENT(e1));
     printf("%d\n", PAGING_FPN(e0));
     printf("%d\n", PAGING_FPN(e2));
 }
