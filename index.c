@@ -74,7 +74,7 @@ pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
     uint32_t e5 = pgd[5];
     uint32_t e6 = pgd[6];
   printf("%d\n", PAGING_PAGE_PRESENT(e1));
-  printf("%d\n", PAGING_PAGE_PRESENT(e2));
+  printf("%d\n", PAGING_SWP(e2));
   printf("%d\n", PAGING_SWP(e3));
   printf("%d\n", PAGING_PAGE_PRESENT(e4));
   printf("%d\n", PAGING_PAGE_PRESENT(e5));
