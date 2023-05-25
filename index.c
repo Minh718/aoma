@@ -57,21 +57,22 @@ int pte_set_fpn(uint32_t *pte, int fpn)
 int main(){
 uint32_t *pgd;
 pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
+     uint32_t *pte5 = &pgd[0];
+
      uint32_t *pte1 = &pgd[1];
      uint32_t *pte2 = &pgd[2];
      uint32_t *pte3 = &pgd[3];
      uint32_t *pte4 = &pgd[4];
-     uint32_t *pte5 = &pgd[5];
       pte_set_fpn(pte1, 0);
       pte_set_fpn(pte2, 1);
       pte_set_fpn(pte3, 2);
       pte_set_fpn(pte4, 3);
       pte_set_fpn(pte5, 4);
+    uint32_t e5 = pgd[0];
     uint32_t e1 = pgd[1];
     uint32_t e2 = pgd[2];
     uint32_t e3 = pgd[3];
     uint32_t e4 = pgd[4];
-    uint32_t e5 = pgd[5];
     uint32_t e6 = pgd[6];
   printf("%d\n", PAGING_PAGE_PRESENT(e1));
   printf("%d\n", PAGING_PAGE_PRESENT(e2));
