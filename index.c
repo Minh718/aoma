@@ -137,6 +137,7 @@ int main() {
     uint32_t e0 = pgd[0];
     uint32_t e1 = pgd[1];
     printf("%d\n", PAGING_FPN(e1));
+    printf("%d\n", PAGING_FPN(e0));
 
     free(pgd); // Don't forget to free the allocated memory
     return 0;
