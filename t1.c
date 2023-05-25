@@ -18,39 +18,34 @@
 #define BIT(x) (1U << (x))
 
 #define PAGING_MEMRAMSZ BIT(10) /* 1MB */
-#define PAGING_ADDR_FPN_LOBIT NBITS(PAGING_PAGESZ)
-#define PAGING_ADDR_FPN_HIBIT (NBITS(PAGING_MEMRAMSZ) - 1)
-#define PAGING_FPN_MASK  GENMASK(PAGING_ADDR_FPN_HIBIT,PAGING_ADDR_FPN_LOBIT)
-#define PAGING_FPN(x)  GETVAL(x,PAGING_FPN_MASK,PAGING_ADDR_FPN_LOBIT)
+#define PAGING_ADDR_FPN_LOBIT 0 // Change this to 0
+#define PAGING_ADDR_FPN_HIBIT (NBITS(PAGING_PAGESZ) - 1) // Use PAGING_PAGESZ instead of PAGING_MEMRAMSZ
+#define PAGING_FPN_MASK GENMASK(PAGING_ADDR_FPN_HIBIT, PAGING_ADDR_FPN_LOBIT)
+#define PAGING_FPN(x) GETVAL(x, PAGING_FPN_MASK, PAGING_ADDR_FPN_LOBIT)
 
 #define PAGING_PTE_FPN_HIBIT 12
-#define PAGING_PTE_FPN_MASK    GENMASK(PAGING_PTE_FPN_HIBIT,PAGING_PTE_FPN_LOBIT)
+#define PAGING_PTE_FPN_MASK GENMASK(PAGING_PTE_FPN_HIBIT, PAGING_PTE_FPN_LOBIT)
 #define PAGING_PTE_SWAPPED_MASK BIT(30)
-#define PAGING_PTE_PRESENT_MASK BIT(31) 
+#define PAGING_PTE_PRESENT_MASK BIT(31)
 #define PAGING_PTE_FPN_LOBIT 0
-#define SETBIT(v,mask) (v=v|mask)
-#define CLRBIT(v,mask) (v=v&~mask)
-#define SETVAL(v,value,mask,offst) (v=(v&~mask)|((value<<offst)&mask))
+#define SETBIT(v, mask) (v = v | mask)
+#define CLRBIT(v, mask) (v = v & ~mask)
+#define SETVAL(v, value, mask, offst) (v = (v & ~mask) | ((value << offst) & mask))
 
 void pte_set_fpn(uint32_t *pte, uint32_t fpn) {
     SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
     CLRBIT(*pte, PAGING_PTE_SWAPPED_MASK);
 
-    SETVAL(*pte, fpn, PAGING_PTE_FPN_MASK, PAGING_PTE_FPN_LOBIT); 
+    SETVAL(*pte, fpn, PAGING_PTE_FPN_MASK, PAGING_PTE_FPN_LOBIT);
 }
 
 int main() {
     uint32_t *pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
-    uint32_t *pte0 = &pgd[0];
-    uint32_t *pte1 = &pgd[1];
     uint32_t *pte2 = &pgd[2];
-    pte_set_fpn(pte0, 0);
-    pte_set_fpn(pte1, 1);
     pte_set_fpn(pte2, 2);
-    uint32_t e0 = pgd[0];
-    uint32_t e1 = pgd[1];
-    uint32_t e2 = pgd[2];
-    printf("%d\n", PAGING_FPN(e1));
-    printf("%d\n", PAGING_FPN(e0));
+    uint32_t e2 = *pte2;  // Retrieve the value from pte2
     printf("%d\n", PAGING_FPN(e2));
+
+    free(pgd); // Don't forget to free the allocated memory
+    return 0;
 }
