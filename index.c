@@ -37,6 +37,13 @@
 #define PAGING_PTE_FPN_MASK    GENMASK(PAGING_PTE_FPN_HIBIT,PAGING_PTE_FPN_LOBIT)
 #define PAGING_PTE_PRESENT_MASK BIT(31) 
 #define PAGING_PAGE_PRESENT(pte) (pte&PAGING_PTE_PRESENT_MASK)
+
+#define PAGING_SWPFPN_OFFSET 5  
+#define PAGING_MEMSWPSZ BIT(14) /* 16MB */
+#define PAGING_SWP_HIBIT (NBITS(PAGING_MEMSWPSZ) - 1)
+#define PAGING_SWP_LOBIT NBITS(PAGING_PAGESZ)
+#define PAGING_SWP_MASK  GENMASK(PAGING_SWP_HIBIT,PAGING_SWP_LOBIT)
+#define PAGING_SWP(pte) ((pte&PAGING_SWP_MASK) >> PAGING_SWPFPN_OFFSET)
 int pte_set_fpn(uint32_t *pte, int fpn)
 {
   SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
@@ -68,7 +75,7 @@ pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
     uint32_t e6 = pgd[6];
   printf("%d\n", PAGING_PAGE_PRESENT(e1));
   printf("%d\n", PAGING_PAGE_PRESENT(e2));
-  printf("%d\n", PAGING_PAGE_PRESENT(e3));
+  printf("%d\n", PAGING_SWP(e3));
   printf("%d\n", PAGING_PAGE_PRESENT(e4));
   printf("%d\n", PAGING_PAGE_PRESENT(e5));
   printf("%d\n", PAGING_PAGE_PRESENT(e6));
