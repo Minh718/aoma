@@ -87,13 +87,13 @@ int main(){
     uint32_t *pte0 = &pgd[0];
     uint32_t *pte1 = &pgd[1];
     uint32_t *pte2 = &pgd[2];
-    pte_set_swap(pte0, 0, 0);
+    pte_set_swap(pte0, 0, 4);
     pte_set_fpn(pte1, 1);
     pte_set_fpn(pte2, 2);
     uint32_t e0 = pgd[0];
     uint32_t e1 = pgd[1];
     uint32_t e2 = pgd[2];
-    printf("%d \n", !PAGING_PAGE_PRESENT(e0));
+    printf("%d \n", PAGING_FPN(e0));
     printf("%d\n", PAGING_FPN(e1));
     printf("%d\n", PAGING_FPN(e2));
 }
