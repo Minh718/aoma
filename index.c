@@ -65,7 +65,7 @@ uint32_t *pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
       // pte_set_fpn(pte2, 1);
       // pte_set_fpn(pte3, 2);
       // pte_set_fpn(pte4, 3);
-      pte_set_fpn(pte5, 4);
+      // pte_set_fpn(pte5, 4);
     uint32_t e5 = pgd[0];
     // uint32_t e1 = pgd[1];
     // uint32_t e2 = pgd[2];
