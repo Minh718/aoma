@@ -158,6 +158,10 @@
 #define PAGING_FPN_MASK  GENMASK(PAGING_ADDR_FPN_HIBIT, PAGING_ADDR_FPN_LOBIT)
 #define PAGING_FPN(x)  GETVAL(x, PAGING_FPN_MASK, PAGING_ADDR_FPN_LOBIT)
 
+#define SETBIT(v,mask) (v=v|mask)
+#define CLRBIT(v,mask) (v=v&~mask)
+#define SETVAL(v,value,mask,offst) (v=(v&~mask)|((value<<offst)&mask))
+
 int pte_set_fpn(uint32_t *pte, int fpn)
 {
   SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
