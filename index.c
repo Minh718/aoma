@@ -8,7 +8,6 @@
 #define SETVAL(v,value,mask,offst) (v=(v&~mask)|((value<<offst)&mask))
 #define BIT(nr)                 (1U << (nr))
 #define PAGING_PTE_SWAPPED_MASK BIT(30)
-#define PAGING_PTE_PRESENT_MASK BIT(31)
 #define PAGING_PTE_FPN_LOBIT 0
 #define PAGING_PTE_FPN_HIBIT 12
 #define BITS_PER_LONG 32
