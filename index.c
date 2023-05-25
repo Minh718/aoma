@@ -52,7 +52,7 @@ uint32_t *pgd;
 pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
      uint32_t *pte = &pgd[0];
       pte_set_fpn(pte, 0);
-    uint32_t pte1 = pgd[1];
+    uint32_t pte1 = pgd[0];
   printf("%d\n", PAGING_PAGE_PRESENT(pte1));
   // printf("%d\n", PAGING_PAGE_PRESENT(0));
   // printf("%d\n", PAGING_PAGE_PRESENT(1));
