@@ -130,10 +130,13 @@ void pte_set_fpn(uint32_t *pte, uint32_t fpn) {
 
 int main() {
     uint32_t *pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
-    uint32_t *pte5 = &pgd[0];
-    pte_set_fpn(pte5, 4);
-    uint32_t e5 = pgd[0];
-    printf("%d\n", PAGING_FPN(e5));
+    uint32_t *pte0 = &pgd[0];
+    uint32_t *pte1 = &pgd[1];
+    pte_set_fpn(pte0, 0);
+    pte_set_fpn(pte1, 1);
+    uint32_t e0 = pgd[0];
+    uint32_t e1 = pgd[1];
+    printf("%d\n", PAGING_FPN(e1));
 
     free(pgd); // Don't forget to free the allocated memory
     return 0;
