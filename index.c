@@ -28,6 +28,12 @@
 #define GETVAL(v,mask,offst) ((v&mask)>>offst)
 #define PAGING_PGN(x)  GETVAL(x,PAGING_PGN_MASK,PAGING_ADDR_PGN_LOBIT)
 
+#define PAGING_MEMRAMSZ BIT(10) /* 1MB */
+#define PAGING_ADDR_FPN_LOBIT NBITS(PAGING_PAGESZ)
+#define PAGING_ADDR_FPN_HIBIT (NBITS(PAGING_MEMRAMSZ) - 1)
+#define PAGING_FPN_MASK  GENMASK(PAGING_ADDR_FPN_HIBIT,PAGING_ADDR_FPN_LOBIT)
+#define PAGING_FPN(x)  GETVAL(x,PAGING_FPN_MASK,PAGING_ADDR_FPN_LOBIT)
+
 #define PAGING_ADDR_OFFST_HIBIT (NBITS(PAGING_PAGESZ) - 1)
 #define PAGING_OFFST_MASK  GENMASK(PAGING_ADDR_OFFST_HIBIT,PAGING_ADDR_OFFST_LOBIT)
 #define PAGING_OFFST(x)  GETVAL(x,PAGING_OFFST_MASK,PAGING_ADDR_OFFST_LOBIT)
@@ -65,7 +71,7 @@ uint32_t *pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
       // pte_set_fpn(pte2, 1);
       // pte_set_fpn(pte3, 2);
       // pte_set_fpn(pte4, 3);
-      // pte_set_fpn(pte5, 4);
+      pte_set_fpn(pte5, 4);
     uint32_t e5 = pgd[0];
     // uint32_t e1 = pgd[1];
     // uint32_t e2 = pgd[2];
@@ -78,8 +84,8 @@ uint32_t *pgd = malloc(PAGING_CPU_BUS_WIDTH * sizeof(uint32_t));
   // printf("%d\n", PAGING_PAGE_PRESENT(e3));
   // printf("%d\n", PAGING_SWP(e3));
   // printf("%d\n", PAGING_PAGE_PRESENT(e4));
-  printf("%d\n", PAGING_PAGE_PRESENT(e5));
-  printf("%d\n", PAGING_SWP(e5));
+  // printf("%d\n", PAGING_PAGE_PRESENT(e5));
+  printf("%d\n", PAGING_FPN(e5));
 
   // printf("%d\n", PAGING_PAGE_PRESENT(e6));
   // printf("%d\n", PAGING_PAGE_PRESENT(0));
