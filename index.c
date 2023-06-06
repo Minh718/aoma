@@ -8,6 +8,7 @@
 #define SETVAL(v,value,mask,offst) (v=(v&~mask)|((value<<offst)&mask))
 #define BIT(nr)                 (1U << (nr))
 #define PAGING_PTE_SWAPPED_MASK BIT(30)
+#define PAGING_PTE_PRESENT_MASK BIT(31)
 #define PAGING_PTE_FPN_LOBIT 0
 #define PAGING_PTE_FPN_HIBIT 12
 #define BITS_PER_LONG 32
@@ -64,9 +65,7 @@
 int pte_set_swap(uint32_t *pte, int swptyp, int swpoff)
 {
   SETBIT(*pte, PAGING_PTE_PRESENT_MASK);
-  // SETBIT(*pte, PAGING_PTE_SWAPPED_MASK);
-  CLRBIT(*pte, PAGING_PTE_SWAPPED_MASK);
-
+  SETBIT(*pte, PAGING_PTE_SWAPPED_MASK);
 
   SETVAL(*pte, swptyp, PAGING_PTE_SWPTYP_MASK, PAGING_PTE_SWPTYP_LOBIT);
   SETVAL(*pte, swpoff, PAGING_PTE_SWPOFF_MASK, PAGING_PTE_SWPOFF_LOBIT);
