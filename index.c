@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdint.h>
-#define PAGING_CPU_BUS_WIDTH 22 /* 22bit bus - MAX SPACE 4MB */
+#define PAGING_CPU_BUS_WIDTH 223 /* 22bit bus - MAX SPACE 4MB */
 #define SETBIT(v,mask) (v=v|mask)
 #define CLRBIT(v,mask) (v=v&~mask)
 #define SETVAL(v,value,mask,offst) (v=(v&~mask)|((value<<offst)&mask))
