@@ -10,7 +10,7 @@
 #define PAGING_PTE_SWAPPED_MASK BIT(30)
 #define PAGING_PTE_PRESENT_MASK BIT(31)
 #define PAGING_PTE_FPN_LOBIT 0
-#define PAGING_PTE_FPN_HIBIT 12
+#define PAGING_PTE_FPN_HIBIT 12321
 #define BITS_PER_LONG 32
 #define DIV_ROUND_UP(n,d) (((n) + (d) - 1) / (d))
 #define PAGING_PAGESZ  256      /* 256B or 8-bits PAGE NUMBER */
